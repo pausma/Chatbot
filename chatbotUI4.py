@@ -1,14 +1,10 @@
 import streamlit as st
 import sys 
 import os
+
 os.environ["OPENAI_API_KEY"] = API_KEY
 import openai
 openai.api_key = API_KEY
-# Get the absolute path to the script's directory
-script_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
-
-# Change the current working directory to the script's directory
-os.chdir(script_dir)
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from llama_index.embeddings import LangchainEmbedding
 embed_model = LangchainEmbedding(
@@ -61,7 +57,7 @@ documents = loader.load_data(urls=internal_links)
 
 
 index = VectorStoreIndex.from_documents(documents)
-index.storage_context.persist(persist_dir='./ChatUI/cache/data/docs/')
+index.storage_context.persist(persist_dir='./cache/data/docs/')
 
 
 
@@ -90,7 +86,7 @@ def generate_response(prompt_input):
 
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
-        with st.spinner("Přemýšlím"):
+        with st.spinner("Přemýšlím ... "):
             response = generate_response(prompt)
             st.write(response)
     message = {"role": "assistant", "content": response}
