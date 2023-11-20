@@ -1,7 +1,7 @@
 import streamlit as st
 import sys 
 import os
-from config import API_KEY
+
 os.environ["OPENAI_API_KEY"] = API_KEY
 import openai
 openai.api_key = API_KEY
